@@ -1,0 +1,118 @@
+Adding autoShape... 
+Downloading https://github.com/ultralytics/yolov5/releases/download/v4.0/yolov5m.pt to yolov5m.pt...
+
+Adding autoShape... 
+Downloading https://github.com/ultralytics/yolov5/releases/download/v4.0/yolov5l.pt to yolov5l.pt...
+
+Adding autoShape... 
+Downloading https://github.com/ultralytics/yolov5/releases/download/v4.0/yolov5x.pt to yolov5x.pt...
+
+Adding autoShape... 
+YOLO5_S
+image 1/1: 360x640
+image 1/7: 360x640
+image 2/7: 194x259
+image 3/7: 400x940
+image 4/7: 400x762
+image 5/7: 1866x2048
+image 6/7: 720x1280
+image 7/7: 1080x810
+image 1/15: 360x640
+image 2/15: 194x259
+image 3/15: 400x940
+image 4/15: 400x762
+image 5/15: 1866x2048
+image 6/15: 720x1280
+image 7/15: 1080x810
+image 8/15: 610x800
+image 9/15: 303x250
+image 10/15: 768x1024
+image 11/15: 320x640
+image 12/15: 1932x2576
+image 13/15: 799x1200
+image 14/15: 350x660
+image 15/15: 600x702
+1.1299004554748535
+29.99699354171753
+69.14984273910522
+YOLO5_M
+image 1/1: 360x640
+image 1/7: 360x640
+image 2/7: 194x259 1 person
+image 3/7: 400x940
+image 4/7: 400x762
+image 5/7: 1866x2048
+image 6/7: 720x1280
+image 7/7: 1080x810
+image 1/15: 360x640
+image 2/15: 194x259 1 person
+image 3/15: 400x940
+image 4/15: 400x762
+image 5/15: 1866x2048
+image 6/15: 720x1280
+image 7/15: 1080x810
+image 8/15: 610x800
+image 9/15: 303x250
+image 10/15: 768x1024
+image 11/15: 320x640 2 persons, 1 airplane
+image 12/15: 1932x2576
+image 13/15: 799x1200
+image 14/15: 350x660
+image 15/15: 600x702
+1.5909264087677002
+54.205769300460815
+123.70904445648193
+YOLO5_L
+image 1/1: 360x640
+image 1/7: 360x640
+image 2/7: 194x259
+image 3/7: 400x940
+image 4/7: 400x762
+image 5/7: 1866x2048
+image 6/7: 720x1280
+image 7/7: 1080x810
+image 1/15: 360x640
+image 2/15: 194x259 1 person
+image 3/15: 400x940
+image 4/15: 400x762
+image 5/15: 1866x2048
+image 6/15: 720x1280
+image 7/15: 1080x810
+image 8/15: 610x800
+image 9/15: 303x250
+image 10/15: 768x1024
+image 11/15: 320x640 2 persons, 1 airplane, 1 train, 1 truck
+image 12/15: 1932x2576
+image 13/15: 799x1200
+image 14/15: 350x660
+image 15/15: 600x702
+2.8681676387786865
+92.74530935287476
+223.6546607017517
+YOLO5_X
+image 1/1: 360x640
+image 1/7: 360x640
+image 2/7: 194x259
+image 3/7: 400x940
+image 4/7: 400x762
+image 5/7: 1866x2048
+image 6/7: 720x1280
+image 7/7: 1080x810
+image 1/15: 360x640
+image 2/15: 194x259 1 person
+image 3/15: 400x940
+image 4/15: 400x762
+image 5/15: 1866x2048
+image 6/15: 720x1280
+image 7/15: 1080x810
+image 8/15: 610x800
+image 9/15: 303x250
+image 10/15: 768x1024
+image 11/15: 320x640 2 persons, 1 airplane, 1 train, 1 truck
+image 12/15: 1932x2576
+image 13/15: 799x1200
+image 14/15: 350x660
+image 15/15: 600x702
+4.683653354644775
+137.8381962776184
+321.7558596134186
