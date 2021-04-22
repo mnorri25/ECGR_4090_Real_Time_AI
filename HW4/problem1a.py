@@ -1,4 +1,7 @@
 import torch
+import matplotlib.pyplot as plt
+import numpy as np
+import time
 
 #Download CIFAR-10
 from torchvision import datasets
@@ -10,14 +13,14 @@ cifar10_val = datasets.CIFAR10(data_path, train=False, download=True, transform=
 #cifar10_tensor = datasets.CIFAR10(data_path, train=True, download=False, transform=transforms.ToTensor())
 
 # Limit number of classes (Build Dataset)
-label_map = {0: 0,2 :1}
-class_names = ['airplane', 'bird']
-cifar2 = [(img, label_map[label])
+label_map = {6: 0, 7:1, 8:2, 9: 3}
+class_names = ['frog', 'horse', 'ship', 'truck']
+cifar4 = [(img, label_map[label])
         for img, label in cifar10
-        if label in [0,2]]
-cifar2_val = [(img, label_map[label])
+        if label in [6,7,8,9]]
+cifar4_val = [(img, label_map[label])
         for img, label in cifar10_val
-        if label in [0, 2]]
+        if label in [6,7,8,9]]
 
 #Normalize
 #imgs = torch.stack([img_t for img_t, _ in cifar10_tensor], dim=3)
@@ -25,31 +28,14 @@ cifar2_val = [(img, label_map[label])
 
 # Model
 import torch.nn as nn
-n_out = 2
-
-with torch.no_grad():
-    conv.bias.zero()
-    conv.weight.fill_(1.0/9.0)
+n_out = 4
 
 model = nn.Sequential(
-        #nn.Linear(
-        #    3072,#Input features
-        #    512,#Hidden layer size
-        #    ),
-        nn.Conv2d(3, 16, kernel_size=3, padding=1)
-        nn.Tanh(),
-        nn.MaxPool2d(2)
-        nn.Conv2d(16, 8, kernel_size=3, padding1)
-        nn.Tanh()
-        #nn.Linear(
-        #    512,#Hidden layer size
-        #    n_out,#output classes
-        #    ),
-        nn.Linear(8*8*8, 32),
-        nn.Tanh(),
-        nn.Linear(32, 2),
+        nn.Linear(
+            3072,#Input features
+            n_out,#Hidden layer size
+            ),
         nn.LogSoftmax(dim=1))
-
 #Calculate loss
 loss=nn.NLLLoss()
 
@@ -60,11 +46,13 @@ loss=nn.NLLLoss()
 
 #Train
 import torch.optim as optim
-train_loader = torch.utils.data.DataLoader(cifar2, batch_size=64, shuffle=True)
+train_loader = torch.utils.data.DataLoader(cifar4, batch_size=64, shuffle=True)
 learning_rate = 1e-2
 optimizer = optim.SGD(model.parameters(), lr=learning_rate)
 loss_fn = nn.NLLLoss()
-n_epochs = 100
+total_loss=np.array([])
+n_epochs = 200
+start = time.time()
 for epoch in range(n_epochs):
     for imgs, labels in train_loader:
         batch_size = imgs.shape[0]
@@ -74,10 +62,13 @@ for epoch in range(n_epochs):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
+    total_loss = np.append(total_loss, float(loss))
     print("Epoch: %d, Loss %f" % (epoch, float(loss)))
 
+finish = time.time()
+print('Training time: %f' % (finish - start))
 #Validate
-val_loader = torch.utils.data.DataLoader(cifar2_val, batch_size=64, shuffle=False)
+val_loader = torch.utils.data.DataLoader(cifar4_val, batch_size=64, shuffle=False)
 
 correct = 0
 total = 0
@@ -91,3 +82,11 @@ with torch.no_grad():
         correct += int((predicted == labels).sum())
 
 print("Accuracy: %f", correct/total)
+
+#plot loss
+plt.plot(range(n_epochs),total_loss,color="blue")
+plt.title("Model Loss")
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.show()
+plt.savefig('problem1a_loss.png')

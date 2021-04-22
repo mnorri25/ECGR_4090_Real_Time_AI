@@ -1,6 +1,8 @@
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
+import time
+
 #Download CIFAR-10
 from torchvision import datasets
 from torchvision import transforms
@@ -44,7 +46,6 @@ model = nn.Sequential(
             n_out,#output classes
             ),
         nn.LogSoftmax(dim=1))
-
 #Calculate loss
 loss=nn.NLLLoss()
 
@@ -61,6 +62,7 @@ optimizer = optim.SGD(model.parameters(), lr=learning_rate)
 loss_fn = nn.NLLLoss()
 total_loss=np.array([])
 n_epochs = 200
+start = time.time()
 for epoch in range(n_epochs):
     for imgs, labels in train_loader:
         batch_size = imgs.shape[0]
@@ -73,6 +75,8 @@ for epoch in range(n_epochs):
     total_loss = np.append(total_loss, float(loss))
     print("Epoch: %d, Loss %f" % (epoch, float(loss)))
 
+finish = time.time()
+print('Training time: %f' % (finish - start))
 #Validate
 val_loader = torch.utils.data.DataLoader(cifar4_val, batch_size=64, shuffle=False)
 
