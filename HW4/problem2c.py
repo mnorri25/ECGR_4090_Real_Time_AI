@@ -14,8 +14,7 @@ cifar10_val = datasets.CIFAR10(data_path, train=False, download=True, transform=
 
 # Limit number of classes (Build Dataset)
 #label_map = {6: 0, 7:1, 8:2, 9: 3}
-class_names = ['airplane','automobile','bird','cat','deer',
-               'dog','frog','horse','ship','truck']
+#class_names = ['frog', 'horse', 'ship', 'truck']
 #cifar4 = [(img, label_map[label])
 #        for img, label in cifar10
 #        if label in [6,7,8,9]]
@@ -33,21 +32,16 @@ n_out = 10;
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
-        self.conv1=nn.Conv2d(3,16, kernel_size=3, padding=1)
-        self.act1=nn.Tanh()
-        self.pool1=nn.MaxPool2d(2)
-        self.conv2=nn.Conv2d(16,8, kernel_size=3, padding=1)
-        self.act2=nn.Tanh()
-        self.pool2=nn.MaxPool2d(2)
-        self.fc1=nn.Linear(8*8*8,32)
-        self.act3=nn.Tanh()
-        self.fc2=nn.Linear(32,10)
+        self.conv1 = nn.Conv2d(3, 16, kernel_size=3, padding=1)
+        self.conv2 = nn.Conv2d(16, 8, kernel_size=3, padding=1)
+        self.fc1 = nn.Linear(8 * 8 * 8, 32)
+        self.fc2 = nn.Linear(32, n_out)
         
     def forward(self, x):
-        out = self.pool1(self.act1(self.conv1(x)))
-        out = self.pool2(self.act2(self.conv2(out)))
-        out = out.view(-1, 8*8*8)
-        out = self.act3(self.fc1(out))
+        out = F.max_pool2d(torch.tanh(self.conv1(x)), 2)
+        out = F.max_pool2d(torch.tanh(self.conv2(out)), 2)
+        out = out.view(-1, 8 * 8 * 8)
+        out = torch.tanh(self.fc1(out))
         out = self.fc2(out)
         return out
 
@@ -84,10 +78,10 @@ def training_loop(n_epochs, optimizer, model, loss_fn, train_loader, total_loss)
             outputs = model(imgs)
             loss = loss_fn(outputs, labels)
 
-            #l2_lambda = 0.001
-            #l2_norm = sum(p.pow(2.0).sum()
-            #        for p in model.parameters())
-            #loss = loss+l2_lambda*l2_norm
+            l2_lambda = 0.001
+            l2_norm = sum(p.pow(2.0).sum()
+                    for p in model.parameters())
+            loss = loss+l2_lambda*l2_norm
 
             optimizer.zero_grad()
             loss.backward()

@@ -83,6 +83,11 @@ with torch.no_grad():
 
 print("Accuracy: %f", correct/total)
 
+numel_list = [p.numel()
+        for p in model.parameters()
+        if p.requires_grad == True]
+print(sum(numel_list), numel_list)
+
 #plot loss
 plt.plot(range(n_epochs),total_loss,color="blue")
 plt.title("Model Loss")

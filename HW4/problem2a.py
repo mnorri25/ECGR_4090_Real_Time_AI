@@ -124,6 +124,11 @@ def validate(model, train_loader, val_loader):
         accdict[name] = correct/total
     return accdict
 
+numel_list = [p.numel()
+        for p in model.parameters()
+        if p.requires_grad == True]
+print(sum(numel_list), numel_list)
+
 all_acc_dict["baseline"] = validate(model, train_loader, val_loader)
 #plot loss
 plt.plot(range(len(total_loss)),total_loss,color="blue")
